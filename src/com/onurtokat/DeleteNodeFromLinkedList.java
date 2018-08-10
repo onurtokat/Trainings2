@@ -17,7 +17,7 @@ Sample Output
 
 another training data
 
-6
+7
 1
 2
 2
@@ -44,15 +44,17 @@ public class DeleteNodeFromLinkedList {
     public static NodeLL removeDuplicates(NodeLL head) {
         NodeLL root = head;
 
+        //check the next node is null
         if (root.next != null) {
-            //System.out.println("Current root data: " + root.data);
 
             if (root.data == root.next.data) {
-                //System.out.println("Yes, root data equals with next: " + root.data + " == " + root.next.data);
+
                 root.next = root.next.next;
-                //System.out.println("Now root is setted with next: " + root.next.data);
+                //after the regulation, restart the control for same node start
+                removeDuplicates(root);
+            }else{
+                removeDuplicates(root.next);
             }
-            removeDuplicates(root.next);
         }
         return root;
     }
