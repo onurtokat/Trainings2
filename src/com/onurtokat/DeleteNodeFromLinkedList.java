@@ -41,7 +41,22 @@ class NodeLL {
 }
 
 public class DeleteNodeFromLinkedList {
+
     public static NodeLL removeDuplicates(NodeLL head) {
+
+        //non-recursive way
+        /*
+        if(head == null)
+            return null;
+        Node s = head;
+        while(s.next != null){
+            if(s.data == s.next.data)
+                s.next = s.next.next;
+            else
+                s = s.next;
+        }
+        return head;
+        */
         NodeLL root = head;
 
         //check the next node is null
