@@ -17,44 +17,51 @@ Too chaotic
 1
 5
 2 1 5 3 4
+
+
+1 2 5 3 7 8 6 4
 */
 
 package com.onurtokat;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.regex.*;
 
 public class NewYearChaos {
 
     // Complete the minimumBribes function below.
     static void minimumBribes(int[] q) {
 
-        int[] regularArr = Arrays.copyOf(q, q.length);
-        Arrays.sort(regularArr);
-        int diff = 0;
-        for (int i = 0; i < regularArr.length; i++) {
-            for (int j = 0; j < q.length; j++) {
-                if (regularArr[i] == q[j] && (i != j)) {
-                    if (i > j) {
-                        if ((i - j) > 2) {
-                            System.out.println("Too chaotic");
-                            return;
-                        } else {
-                            diff = diff + (i - j);
-                        }
-                    } else if (i < j) {
-                        System.out.println("q[j]: "+q[j]+"q[j-1]: "+q[j-1]+" "+(q[j]-q[j-1]));
-
-                    }
+//        int[] regularArr = Arrays.copyOf(q, q.length);
+//        Arrays.sort(regularArr);
+//        for (int i = 0; i < regularArr.length; i++) {
+//            for (int j = 0; j < q.length; j++) {
+//                if (regularArr[i] == q[j] && (i != j)) {
+//                    if (i > j) {
+//                        if ((i - j) > 2) {
+//                            System.out.println("Too chaotic");
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        int temp;
+        int count = 0;
+        for (int i = 0; i < q.length - 1; i++) {
+            for (int j = 0; j < q.length - 1; j++) {
+                if (q[j]>=q[j+2]) {
+                    System.out.println("Too chaotic");
+                    return;
+                }
+                if (q[j] > q[j + 1]) {//inversion of array
+                    temp = q[j];
+                    q[j] = q[j + 1];
+                    q[j + 1] = temp;
+                    count++;
                 }
             }
         }
-        //System.out.println(diff);
+        System.out.println(count);
     }
 
     private static final Scanner scanner = new Scanner(System.in);
