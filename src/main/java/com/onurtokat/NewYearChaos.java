@@ -36,7 +36,7 @@ public class NewYearChaos {
     // Complete the minimumBribes function below.
     static void minimumBribes(int[] q) {
 
-        //this solution provides O(n^2), means quadratic problem
+        //this solution (bubble sort) provides O(n^2), means quadratic problem
 //        int temp;
 //        int count = 0;
 //        for (int i = 0; i < q.length - 1; i++) {
@@ -62,6 +62,7 @@ public class NewYearChaos {
             }
         }
 
+        //Mergesort
         //Count inversions counts in worst case in O(nlogn) time.
         int[] sortedArray = divideAndConquer(q);
         //Number of inversions
