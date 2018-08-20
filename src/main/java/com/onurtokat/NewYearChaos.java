@@ -24,45 +24,97 @@ Too chaotic
 
 package com.onurtokat;
 
+import org.apache.hadoop.fs.shell.Count;
+
+import java.math.BigDecimal;
 import java.util.*;
 
 public class NewYearChaos {
 
+    private static BigDecimal total = new BigDecimal(0);
+
     // Complete the minimumBribes function below.
     static void minimumBribes(int[] q) {
 
-//        int[] regularArr = Arrays.copyOf(q, q.length);
-//        Arrays.sort(regularArr);
-//        for (int i = 0; i < regularArr.length; i++) {
-//            for (int j = 0; j < q.length; j++) {
-//                if (regularArr[i] == q[j] && (i != j)) {
-//                    if (i > j) {
-//                        if ((i - j) > 2) {
-//                            System.out.println("Too chaotic");
-//                            return;
-//                        }
-//                    }
+        //this solution provides O(n^2), means quadratic problem
+//        int temp;
+//        int count = 0;
+//        for (int i = 0; i < q.length - 1; i++) {
+//            for (int j = 0; j < q.length - 1; j++) {
+//                if ((q[j] - 1 - j) > 2) {
+//                    System.out.println("Too chaotic");
+//                    return;
+//                }
+//                if (q[j] > q[j + 1]) {
+//                    temp = q[j];
+//                    q[j] = q[j + 1];
+//                    q[j + 1] = temp;
+//                    count++;
 //                }
 //            }
 //        }
-        int temp;
-        int count = 0;
-        for (int i = 0; i < q.length - 1; i++) {
-            for (int j = 0; j < q.length - 1; j++) {
-                if (q[j]>=q[j+2]) {
-                    System.out.println("Too chaotic");
-                    return;
-                }
-                if (q[j] > q[j + 1]) {//inversion of array
-                    temp = q[j];
-                    q[j] = q[j + 1];
-                    q[j + 1] = temp;
-                    count++;
-                }
+//        System.out.println(count);
+
+        for (int a = 0; a < q.length; a++) {
+            if (((q[a] - 1) - a) > 2) {
+                System.out.println("Too chaotic");
+                return;
             }
         }
-        System.out.println(count);
+
+        //Count inversions counts in worst case in O(nlogn) time.
+        int[] sortedArray = divideAndConquer(q);
+        //Number of inversions
+        System.out.println(total);
     }
+
+    public static int[] divideAndConquer(int[] inputArray) {
+        int n = inputArray.length;
+        if (n == 1) {
+            return inputArray;
+        }
+        int mid = n / 2;
+        int[] leftArray = new int[mid];
+        int[] rightArray = new int[n - mid];
+        System.arraycopy(inputArray, 0, leftArray, 0, leftArray.length);
+        System.arraycopy(inputArray, leftArray.length, rightArray, 0, rightArray.length);
+        divideAndConquer(leftArray);
+        divideAndConquer(rightArray);
+        merge(leftArray, rightArray, inputArray);
+        return inputArray;
+    }
+
+    public static void merge(int[] leftArray,
+                             int[] rightArray,
+                             int[] sortedArray) {
+        int leftArrayLength = leftArray.length;
+        int rightArrayLength = rightArray.length;
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i < leftArrayLength && j < rightArrayLength) {
+            if (leftArray[i] < rightArray[j]) {
+                sortedArray[k] = leftArray[i];
+                i++;
+            } else {
+                sortedArray[k] = rightArray[j];
+                j++;
+                total = total.add(new BigDecimal(leftArray.length - i));
+            }
+            k++;
+        }
+        while (i < leftArrayLength) {
+            sortedArray[k] = leftArray[i];
+            i++;
+            k++;
+        }
+        while (j < rightArrayLength) {
+            sortedArray[k] = rightArray[j];
+            j++;
+            k++;
+        }
+    }
+
 
     private static final Scanner scanner = new Scanner(System.in);
 
