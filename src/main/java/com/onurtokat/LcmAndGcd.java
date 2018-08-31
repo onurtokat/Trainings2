@@ -1,5 +1,7 @@
 package com.onurtokat;
+/*
 
+ */
 public class LcmAndGcd {
 
     //Greatest common divisor with two long parameter
